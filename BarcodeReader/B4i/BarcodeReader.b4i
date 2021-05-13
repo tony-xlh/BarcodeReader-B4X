@@ -1,14 +1,17 @@
-﻿Build1=Default,b4i.example
+﻿Build1=Default,com.xulihang.barcodereader
 File1=MainPage.bil
 FileGroup1=Default Group
 Group=Default Group
-Library1=icore
-Library2=b4xpages
+Library1=b4xpages
+Library2=icore
+Library3=imedia
 Module1=|relative|..\B4XMainPage
+Module2=|relative|..\DBR
+Module3=|relative|..\TextResult
 NumberOfFiles=1
-NumberOfLibraries=2
-NumberOfModules=1
-Version=6.5
+NumberOfLibraries=3
+NumberOfModules=3
+Version=7.2
 @EndOfDesignText@
 'Code module
 #Region  Project Attributes 
@@ -20,7 +23,14 @@ Version=6.5
 	#Target: iPhone, iPad
 	#ATSEnabled: True
 	#MinVersion: 8
+	#PlistExtra:<key>NSPhotoLibraryUsageDescription</key><string>Select a photo.</string>
+    #PlistExtra:<key>NSCameraUsageDescription</key><string>Taking a photo.</string>
+    #PlistExtra:<key>NSMicrophoneUsageDescription</key><string>Record video.</string>
+	#PlistExtra:<key>NSPhotoLibraryAddUsageDescription</key><string>Save photo in albums.</string>
 #End Region
+
+#AdditionalLib: DynamsoftBarcodeReader.framework.3
+#AdditionalLib: libc++.tbd
 
 Sub Process_Globals
 	Public App As Application

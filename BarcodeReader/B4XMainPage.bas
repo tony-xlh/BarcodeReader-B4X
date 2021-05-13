@@ -18,16 +18,20 @@ Sub Class_Globals
 	Private lblResult As B4XView
 	Private reader As DBR
 	Private Panel1 As B4XView
-	private xPercent as Double
-	private yPercent as Double
+	Private xPercent As Double
+	Private yPercent As Double
 End Sub
 
 Public Sub Initialize
     reader.Initialize
-	#if b4j
-	reader.initLicenseFromKey("t0075xQAAAEUicOSVdOGZ4EZ/VxishmCoVr+hWw1MHA/HVLn/Tcn4rrPWS5q4/XutioRWZuPhRqYc7M819vfK8OJWilkG+Ic1yw9e6ypy")
-	#else
+	#if b4a
 	reader.initLicenseFromLTS("200001")	
+	#Else if b4j
+	reader.initLicenseFromKey("t0075xQAAAEUicOSVdOGZ4EZ/VxishmCoVr+hWw1MHA/HVLn/Tcn4rrPWS5q4/XutioRWZuPhRqYc7M819vfK8OJWilkG+Ic1yw9e6ypy")
+	#Else if b4i
+	reader.initLicenseFromKey("t0068MgAAAJWPwDybm7nk0f9xYH25MMaVrZYcmhsiVoZrVo2hfcwRS74T6QA79OfzyvhC+9fgFI2noI8zBc66WHFCusVUgqk=")
+	#else
+	
 	#End If	
 End Sub
 
@@ -55,6 +59,18 @@ Private Sub btnLoadImage_Click
 	End If	
 	#End If
 	
+	#if b4i
+	Dim cam As Camera
+	cam.Initialize("camera",B4XPages.GetNativeParent(Me))
+	cam.SelectFromSavedPhotos(Sender, cam.TYPE_ALL)
+	Wait For camera_Complete (Success As Boolean, Image As Bitmap, VideoPath As String)
+	Log(Success)
+	If Success Then
+		bm=Image
+		bm=bm.Rotate(90)	
+	End If
+	#End If
+	
 	#if b4j
     Dim fc As FileChooser
 	fc.Initialize
@@ -64,7 +80,9 @@ Private Sub btnLoadImage_Click
 		bm=fx.LoadImage(path,"")
 	End If		
 	#End If	
+	
 	cvs.ClearRect(cvs.TargetRect)
+	
 	drawBitmap(bm)
 	Panel1.Tag=bm
 End Sub
@@ -74,13 +92,14 @@ Private Sub drawBitmap(bitmap As B4XBitmap)
 	Dim rect As B4XRect
 	rect.Initialize(0,0,resized.Width,resized.Height)
 	cvs.DrawBitmap(resized,rect)
+	cvs.Invalidate
 	xPercent=resized.Width/bitmap.Width
 	yPercent=resized.Height/bitmap.Height
 End Sub
 
 Private Sub btnDecode_Click		
 	Dim bm As B4XBitmap=Panel1.Tag
-	Dim results As List=reader.decodeBufferedImage(bm)
+	Dim results As List=reader.decodeImage(bm)
 	Dim sb As StringBuilder
 	sb.Initialize
 	Dim color As Int=xui.Color_Red
