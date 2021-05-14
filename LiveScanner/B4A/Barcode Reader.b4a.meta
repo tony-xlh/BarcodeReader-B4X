@@ -1,0 +1,15 @@
+﻿ModuleBookmarks0=
+ModuleBookmarks1=
+ModuleBookmarks2=
+ModuleBookmarks3=
+ModuleBreakpoints0=
+ModuleBreakpoints1=
+ModuleBreakpoints2=
+ModuleBreakpoints3=
+ModuleClosedNodes0=1,6
+ModuleClosedNodes1=
+ModuleClosedNodes2=
+ModuleClosedNodes3=1
+NavigationStack=B4XMainPage,StartCamera,106,0,B4XMainPage,Initialize,28,5,B4XMainPage,B4XPage_Created,37,1,CameraExClass,SavePictureToFile,127,0,CameraExClass,PreviewImageToJpeg,258,0,CameraExClass,SetDisplayOrientation,65,0,B4XMainPage,BytesToImage,146,0,B4XMainPage,Camera1_Preview,129,6,B4XMainPage,StartCameraShared,80,0,B4XMainPage,ShowResults,80,0
+SelectedBuild=0
+VisibleModules=1,2
