@@ -9,20 +9,6 @@ Sub Process_Globals
 
 End Sub
 
-#if b4i
-Public Sub asNO(o As Object) As NativeObject
-	Dim no As NativeObject
-	no=o
-	Return no
-End Sub
-#else
-public Sub asJO(o As Object) As JavaObject
-	Dim jo As JavaObject
-	jo=o
-	Return jo
-End Sub
-#End If
-
 public Sub SetClipboardString(s As String)
 	#if b4i
 	Dim cb As Clipboard

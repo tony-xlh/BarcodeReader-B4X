@@ -64,7 +64,7 @@ Private Sub btnLoadImage_Click
 	Wait For camera_Complete (Success As Boolean, Image As Bitmap, VideoPath As String)
 	Log(Success)
 	If Success Then
-		bm=Utils.asNO(Me).RunMethod("normalizedImage:",Array(Image))			
+		bm=asNO(Me).RunMethod("normalizedImage:",Array(Image))			
 	End If
 	#End If
 	
@@ -152,6 +152,15 @@ End Sub
 #if b4j
 Private Sub lblResult_MouseClicked (EventData As MouseEvent)
 	lblResult_Click
+End Sub
+#End If
+
+
+#if b4i
+private Sub asNO(o As Object) As NativeObject
+	Dim no As NativeObject
+	no=o
+	Return no
 End Sub
 #End If
 

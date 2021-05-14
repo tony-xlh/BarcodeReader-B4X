@@ -13,6 +13,6 @@ ModuleClosedNodes1=
 ModuleClosedNodes2=
 ModuleClosedNodes3=
 ModuleClosedNodes4=
-NavigationStack=Utils,asJO,18,0,Utils,SetClipboardString,29,2,B4XMainPage,resizeIfNeeded,107,0,B4XMainPage,lblResult_Click,143,6,B4XMainPage,lblResult_MouseClicked,145,0,B4XMainPage,btnDecode_Click,119,6,B4XMainPage,btnLoadImage_Click,41,0,B4XMainPage,Initialize,26,0,Visual Designer,MainPage.bjl,-100,6,B4XMainPage,B4XPage_Created,33,6
+NavigationStack=Utils,SetClipboardString,29,2,B4XMainPage,resizeIfNeeded,107,0,B4XMainPage,lblResult_Click,143,6,B4XMainPage,lblResult_MouseClicked,145,0,B4XMainPage,btnDecode_Click,119,6,B4XMainPage,btnLoadImage_Click,41,0,B4XMainPage,Initialize,26,0,Visual Designer,MainPage.bjl,-100,6,B4XMainPage,B4XPage_Created,33,6,B4XMainPage,Class_Globals,17,0
 SelectedBuild=0
 VisibleModules=1,2,3,4

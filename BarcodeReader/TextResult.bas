@@ -29,7 +29,7 @@ private Sub Parse
 	Dim resultPoints As List=localizationResult.GetField("resultPoints")	
 	For i=0 To 3	
 		Dim NSPoint As NativeObject = resultPoints.Get(i)		
-		Dim CGPoint As NativeObject = Utils.asNO(Me).RunMethod("convert:",Array(NSPoint))
+		Dim CGPoint As NativeObject = asNO(Me).RunMethod("convert:",Array(NSPoint))
 		Dim values() As Float=CGPoint.ArrayFromPoint(CGPoint)
 		Dim p As Point2D
 		p.Initialize
@@ -69,6 +69,12 @@ Public Sub getResultPoints As Point2D()
 End Sub
 
 #if b4i
+private Sub asNO(o As Object) As NativeObject
+	Dim no As NativeObject
+	no=o
+	Return no
+End Sub
+
 #if objc
 
 - (CGPoint) convert: (NSValue*) x {

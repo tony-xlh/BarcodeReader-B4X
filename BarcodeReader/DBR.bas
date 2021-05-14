@@ -24,17 +24,17 @@ End Sub
 'not available for desktop
 public Sub initLicenseFromLTS(organizationID As String)
 	#if b4a
-	Utils.asJO(Me).RunMethod("initLicenseFromLTS",Array(reader,organizationID))	
+	asJO(Me).RunMethod("initLicenseFromLTS",Array(reader,organizationID))	
 	#End If	
 	#if b4i
-	reader=Utils.asNO(Me).RunMethod("initializeDBRFromLTS:",Array(organizationID))
+	reader=asNO(Me).RunMethod("initializeDBRFromLTS:",Array(organizationID))
 	#End If
 End Sub
 
 public Sub initLicenseFromKey(license As String)
 	#if b4i
 	'reader.RunMethod("alloc",Null).RunMethod("initWithLicense:",Array(license))
-	reader=Utils.asNO(Me).RunMethod("initializeDBR:",Array(license))
+	reader=asNO(Me).RunMethod("initializeDBR:",Array(license))
 	#else
 	reader.RunMethod("initLicense",Array(license))
 	Log(reader.RunMethod("getVersion",Null))
@@ -66,7 +66,7 @@ End Sub
 Sub decodeImage(bitmap As B4XBitmap) As List	
 		
 	#if b4i	
-	Dim results As List=Utils.asNO(Me).RunMethod("decodeImage:",Array(bitmap))
+	Dim results As List=asNO(Me).RunMethod("decodeImage:",Array(bitmap))
 	Return ConvertToTextResults2(results)
 	
 	#Else	
@@ -90,6 +90,20 @@ Sub decodeImage(bitmap As B4XBitmap) As List
 	
 End Sub
 
+
+#if b4i
+private Sub asNO(o As Object) As NativeObject
+	Dim no As NativeObject
+	no=o
+	Return no
+End Sub
+#else
+private Sub asJO(o As Object) As JavaObject
+	Dim jo As JavaObject
+	jo=o
+	Return jo
+End Sub
+#End If
 
 #If b4a
 

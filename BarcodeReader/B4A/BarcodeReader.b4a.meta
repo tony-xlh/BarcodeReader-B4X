@@ -16,6 +16,6 @@ ModuleClosedNodes2=
 ModuleClosedNodes3=1
 ModuleClosedNodes4=
 ModuleClosedNodes5=
-NavigationStack=DBR,initLicenseFromKey,32,0,DBR,ConvertToTextResults2,54,0,DBR,decodeImage,116,0,DBR,Class_Globals,8,0,DBR,Initialize,15,0,DBR,initLicenseFromLTS,23,0,DBR,ConvertToTextResults,45,0,B4XMainPage,Class_Globals,17,0,B4XMainPage,Initialize,28,0,B4XMainPage,btnLoadImage_Click,71,0,B4XMainPage,lblResult_Click,154,0
+NavigationStack=Utils,Process_Globals,3,0,DBR,ConvertToTextResults,44,0,DBR,ConvertToTextResults2,54,0,DBR,decodeImage,94,0,DBR,asJO,94,0,TextResult,Initialize,25,0,Utils,SetClipboardString,17,0,B4XMainPage,lblResult_Click,148,0,TextResult,getResultPoints,65,0,TextResult,Class_Globals,7,0
 SelectedBuild=0
 VisibleModules=1,2,4,5
