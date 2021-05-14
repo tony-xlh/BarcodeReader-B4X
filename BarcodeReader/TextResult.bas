@@ -9,8 +9,7 @@ Sub Class_Globals
 	Private mTextResult As NativeObject
 	#else
 	Private mTextResult As JavaObject
-	#End If
-	
+	#End If	
 	Private mText As String
 	Private mResultPoints(4) As Point2D
 	Type Point2D(x As Int,y As Int)
@@ -26,13 +25,11 @@ End Sub
 
 private Sub Parse
 	mText=mTextResult.GetField("barcodeText").AsString
-	Log(mText)
 	Dim localizationResult As NativeObject=mTextResult.GetField("localizationResult")	
-	Dim resultPoints As List=localizationResult.GetField("resultPoints")
-	
+	Dim resultPoints As List=localizationResult.GetField("resultPoints")	
 	For i=0 To 3	
 		Dim NSPoint As NativeObject = resultPoints.Get(i)		
-		Dim CGPoint As NativeObject = asNO(Me).RunMethod("convert:",Array(NSPoint))
+		Dim CGPoint As NativeObject = Utils.asNO(Me).RunMethod("convert:",Array(NSPoint))
 		Dim values() As Float=CGPoint.ArrayFromPoint(CGPoint)
 		Dim p As Point2D
 		p.Initialize
@@ -72,11 +69,6 @@ Public Sub getResultPoints As Point2D()
 End Sub
 
 #if b4i
-private Sub asNO(o As Object) As NativeObject
-	Dim no As NativeObject
-	no=o
-	Return no
-End Sub
 #if objc
 
 - (CGPoint) convert: (NSValue*) x {

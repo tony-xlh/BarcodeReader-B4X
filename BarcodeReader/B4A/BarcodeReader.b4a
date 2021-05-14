@@ -1,4 +1,4 @@
-﻿Build1=Default,b4a.example
+﻿Build1=Default,com.xulihang.barcodereader
 File1=MainPage.bal
 FileGroup1=Default Group
 Group=Default Group
@@ -8,18 +8,20 @@ Library3=core
 Library4=javaobject
 Library5=phone
 Library6=xui
+Library7=clipboard
 ManifestCode='This code will be applied to the manifest file during compilation.~\n~'You do not need to modify it in most cases.~\n~'See this link for for more information: https://www.b4x.com/forum/showthread.php?p=78136~\n~AddManifestText(~\n~<uses-sdk android:minSdkVersion="5" android:targetSdkVersion="29"/>~\n~<supports-screens android:largeScreens="true" ~\n~    android:normalScreens="true" ~\n~    android:smallScreens="true" ~\n~    android:anyDensity="true"/>)~\n~SetApplicationAttribute(android:icon, "@drawable/icon")~\n~SetApplicationAttribute(android:label, "$LABEL$")~\n~CreateResourceFromFile(Macro, Themes.LightTheme)~\n~'End of default text.~\n~
 Module1=|relative|..\B4XMainPage
 Module2=|relative|..\DBR
 Module3=Starter
 Module4=|relative|..\TextResult
+Module5=|relative|..\Utils
 NumberOfFiles=1
-NumberOfLibraries=6
-NumberOfModules=4
+NumberOfLibraries=7
+NumberOfModules=5
 Version=10.5
 @EndOfDesignText@
 #Region  Project Attributes 
-	#ApplicationLabel: B4A Example
+	#ApplicationLabel: Barcode Reader
 	#VersionCode: 1
 	#VersionName: 
 	'SupportedOrientations possible values: unspecified, landscape or portrait.

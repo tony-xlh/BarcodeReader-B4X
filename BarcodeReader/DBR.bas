@@ -6,35 +6,35 @@ Version=10.5
 @EndOfDesignText@
 Sub Class_Globals
 	#if b4i
-	Private reader As NativeObject
+	Private reader As NativeObject 'ignore
 	#else
 	Private reader As JavaObject
-	#End If
-	
+	#End If	
 End Sub
 
 'Initializes the object. You can add parameters to this method if needed.
 Public Sub Initialize
 	#if b4i
-	reader.Initialize("DynamsoftBarcodeReader")
+
 	#else
 	reader.InitializeNewInstance("com.dynamsoft.dbr.BarcodeReader",Null)		
 	#End If		
 End Sub
 
-#if b4a
-'only available for B4A
+'not available for desktop
 public Sub initLicenseFromLTS(organizationID As String)
-	asJO(Me).RunMethod("initLicenseFromLTS",Array(reader,organizationID))
-	Log(reader.RunMethod("getVersion",Null))
+	#if b4a
+	Utils.asJO(Me).RunMethod("initLicenseFromLTS",Array(reader,organizationID))	
+	#End If	
+	#if b4i
+	reader=Utils.asNO(Me).RunMethod("initializeDBRFromLTS:",Array(organizationID))
+	#End If
 End Sub
-#End If	
 
 public Sub initLicenseFromKey(license As String)
 	#if b4i
 	'reader.RunMethod("alloc",Null).RunMethod("initWithLicense:",Array(license))
-	reader=asNO(Me).RunMethod("initializeDBR:",Array(license))
-	'Log(reader.RunMethod("getVersion",Null).AsString)
+	reader=Utils.asNO(Me).RunMethod("initializeDBR:",Array(license))
 	#else
 	reader.RunMethod("initLicense",Array(license))
 	Log(reader.RunMethod("getVersion",Null))
@@ -63,19 +63,20 @@ private Sub ConvertToTextResults2(results As List) As List
 	Return list1
 End Sub
 
-Sub decodeImage(bitmap As B4XBitmap) As List		
+Sub decodeImage(bitmap As B4XBitmap) As List	
+		
 	#if b4i	
-	Dim results As List=asNO(Me).RunMethod("decodeImage:",Array(bitmap))
+	Dim results As List=Utils.asNO(Me).RunMethod("decodeImage:",Array(bitmap))
 	Return ConvertToTextResults2(results)
 	
-	#Else
-	
+	#Else	
 	Dim results() As Object
+	
 	#If b4j
 	
-	Dim utils As JavaObject
-	utils.InitializeStatic("javafx.embed.swing.SwingFXUtils")
-	Dim bufferedImage As Object=utils.RunMethod("fromFXImage",Array(bitmap,Null))
+	Dim SwingFXUtils As JavaObject
+	SwingFXUtils.InitializeStatic("javafx.embed.swing.SwingFXUtils")
+	Dim bufferedImage As Object=SwingFXUtils.RunMethod("fromFXImage",Array(bitmap,Null))
 	results=reader.RunMethod("decodeBufferedImage",Array(bufferedImage,""))
 	
 	#else if b4a
@@ -83,25 +84,11 @@ Sub decodeImage(bitmap As B4XBitmap) As List
 	results=reader.RunMethod("decodeBufferedImage",Array(bitmap,""))    
 	
 	#End If	
+	
 	Return ConvertToTextResults(results)
-	#end if		
+	#end if
 	
 End Sub
-
-
-#If b4i
-private Sub asNO(o As Object) As NativeObject
-	Dim no As NativeObject
-	no=o
-	Return no
-End Sub
-#Else
-private Sub asJO(o As Object) As JavaObject
-	Dim jo As JavaObject
-	jo=o
-	Return jo
-End Sub
-#End If
 
 
 #If b4a
@@ -138,6 +125,15 @@ public static void initLicenseFromLTS(BarcodeReader dbr,String organizationID){
     NSLog(dbr.getVersion);
     return dbr;
 
+}
+
+- (DynamsoftBarcodeReader*) initializeDBRFromLTS: (NSString*) organizationID {
+
+    DynamsoftBarcodeReader *dbr;
+	iDMLTSConnectionParameters* lts = [[iDMLTSConnectionParameters alloc] init];
+	lts.organizationID = organizationID;	
+	dbr = [[DynamsoftBarcodeReader alloc] initLicenseFromLTS:lts verificationDelegate:self];
+	return dbr;
  }
  
 - (NSArray<iTextResult*>*) decodeImage: (UIImage*) image {
@@ -150,5 +146,3 @@ public static void initLicenseFromLTS(BarcodeReader dbr,String organizationID){
 
 #end if
 #End If
-
-

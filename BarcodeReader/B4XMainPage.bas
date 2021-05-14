@@ -24,14 +24,11 @@ End Sub
 
 Public Sub Initialize
     reader.Initialize
-	#if b4a
-	reader.initLicenseFromLTS("200001")	
-	#Else if b4j
+	'request your license here: https://www.dynamsoft.com/customer/license/trialLicense?ver=latest
+	#if b4j
 	reader.initLicenseFromKey("t0075xQAAAEUicOSVdOGZ4EZ/VxishmCoVr+hWw1MHA/HVLn/Tcn4rrPWS5q4/XutioRWZuPhRqYc7M819vfK8OJWilkG+Ic1yw9e6ypy")
-	#Else if b4i
-	reader.initLicenseFromKey("t0068MgAAAJWPwDybm7nk0f9xYH25MMaVrZYcmhsiVoZrVo2hfcwRS74T6QA79OfzyvhC+9fgFI2noI8zBc66WHFCusVUgqk=")
 	#else
-	
+	reader.initLicenseFromLTS("200001")	
 	#End If	
 End Sub
 
@@ -40,6 +37,7 @@ Private Sub B4XPage_Created (Root1 As B4XView)
 	Root = Root1
 	Root.LoadLayout("MainPage")	
 	cvs.Initialize(Panel1)
+	B4XPages.SetTitle(Me,"Barcode Reader")
 End Sub
 
 'You can see the list of page related events in the B4XPagesManager object. The event name is B4XPage.
@@ -62,12 +60,11 @@ Private Sub btnLoadImage_Click
 	#if b4i
 	Dim cam As Camera
 	cam.Initialize("camera",B4XPages.GetNativeParent(Me))
-	cam.SelectFromSavedPhotos(Sender, cam.TYPE_ALL)
+	cam.SelectFromSavedPhotos(Sender, cam.TYPE_IMAGE)	
 	Wait For camera_Complete (Success As Boolean, Image As Bitmap, VideoPath As String)
 	Log(Success)
 	If Success Then
-		bm=Image
-		bm=bm.Rotate(90)	
+		bm=Utils.asNO(Me).RunMethod("normalizedImage:",Array(Image))			
 	End If
 	#End If
 	
@@ -76,19 +73,19 @@ Private Sub btnLoadImage_Click
 	fc.Initialize
 	Dim path As String=fc.ShowOpen(B4XPages.GetNativeParent(Me))	
 	If File.Exists(path,"") Then
-	    Dim fx As JFX
-		bm=fx.LoadImage(path,"")
+		bm=xui.LoadBitmap(path,"")
 	End If		
 	#End If	
 	
-	cvs.ClearRect(cvs.TargetRect)
-	
-	drawBitmap(bm)
-	Panel1.Tag=bm
+	If bm.IsInitialized And bm<>Null Then		 
+		cvs.ClearRect(cvs.TargetRect)
+		drawBitmap(bm)
+		Panel1.Tag=bm
+	End If
 End Sub
 
-Private Sub drawBitmap(bitmap As B4XBitmap)
-	Dim resized As B4XBitmap=bitmap.Resize(cvs.TargetView.Width,cvs.TargetView.Height,True)
+Private Sub drawBitmap(bitmap As B4XBitmap)	
+	Dim resized As B4XBitmap=resizeIfNeeded(bitmap)
 	Dim rect As B4XRect
 	rect.Initialize(0,0,resized.Width,resized.Height)
 	cvs.DrawBitmap(resized,rect)
@@ -97,7 +94,32 @@ Private Sub drawBitmap(bitmap As B4XBitmap)
 	yPercent=resized.Height/bitmap.Height
 End Sub
 
+private Sub resizeIfNeeded(bitmap As B4XBitmap) As B4XBitmap
+	Dim ratio As Double=bitmap.Width/bitmap.Height
+	Dim targetWidth,targetHeight As Int
+	targetWidth=bitmap.Width
+	targetHeight=bitmap.Height
+	If targetWidth>=cvs.TargetView.Width Then
+		targetWidth=cvs.TargetView.Width
+		targetHeight=targetWidth/ratio
+	End If
+	If targetHeight>=cvs.TargetView.Height Then
+		targetWidth=targetHeight/cvs.TargetView.Height*targetWidth
+		targetHeight=cvs.TargetView.Height
+	End If
+	If targetWidth=bitmap.Width And targetHeight=bitmap.Height Then ' no need to resize
+		Return bitmap
+	Else
+		Return bitmap.Resize(targetWidth,targetHeight,True)
+	End If
+	
+End Sub
+
 Private Sub btnDecode_Click		
+	If (Panel1.Tag Is B4XBitmap)=False  Then
+		xui.MsgboxAsync("Please load an image first","")
+		Return
+	End If
 	Dim bm As B4XBitmap=Panel1.Tag
 	Dim results As List=reader.decodeImage(bm)
 	Dim sb As StringBuilder
@@ -121,3 +143,30 @@ Private Sub btnDecode_Click
 	cvs.Invalidate
 	lblResult.Text=sb.ToString
 End Sub
+
+Private Sub lblResult_Click
+    Utils.SetClipboardString(lblResult.Text)
+	xui.MsgboxAsync("Copied to clipboard","")
+End Sub
+
+#if b4j
+Private Sub lblResult_MouseClicked (EventData As MouseEvent)
+	lblResult_Click
+End Sub
+#End If
+
+#if b4i
+#if objc
+//https://stackoverflow.com/questions/8915630/ios-uiimageview-how-to-handle-uiimage-image-orientation
+- (UIImage *)normalizedImage: (UIImage*) image {
+    if (image.imageOrientation == UIImageOrientationUp) return image; 
+    UIGraphicsBeginImageContextWithOptions(image.size, NO, image.scale);
+    [image drawInRect:(CGRect){0, 0, image.size}];
+    UIImage *normalizedImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return normalizedImage;
+}
+#End If
+#End If
+
+

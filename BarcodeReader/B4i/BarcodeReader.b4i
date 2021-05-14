@@ -5,17 +5,19 @@ Group=Default Group
 Library1=b4xpages
 Library2=icore
 Library3=imedia
+Library4=iphone
 Module1=|relative|..\B4XMainPage
 Module2=|relative|..\DBR
 Module3=|relative|..\TextResult
+Module4=|relative|..\Utils
 NumberOfFiles=1
-NumberOfLibraries=3
-NumberOfModules=3
+NumberOfLibraries=4
+NumberOfModules=4
 Version=7.2
 @EndOfDesignText@
 'Code module
 #Region  Project Attributes 
-	#ApplicationLabel: B4i Example
+	#ApplicationLabel: Barcode Reader
 	#Version: 1.0.0 
 	'Orientation possible values: Portrait, LandscapeLeft, LandscapeRight and PortraitUpsideDown
 	#iPhoneOrientations: Portrait, LandscapeLeft, LandscapeRight
