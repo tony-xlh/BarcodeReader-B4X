@@ -175,7 +175,7 @@ End Sub
 Private Sub ConfigureCamera
 	Try
 		llc.BeginConfiguration
-		llc.FlashMode = llc.FLASH_AUTO		
+		llc.FlashMode = llc.FLASH_AUTO				
 		llc.PreserveRatio = True		
 		llc.CommitConfiguration
 	Catch
@@ -237,13 +237,6 @@ Sub Timer1_Tick
 	End If
 End Sub
 
-Private Sub pnlPreview_Resize (Width As Double, Height As Double)
-	Dim n As Node=vlc.player
-	If n.IsInitialized Then
-		n.SetSize(Width,Height)
-	End If
-End Sub
-
 Sub B4XPage_CloseRequest As ResumableSub
 	Log("We are closing the mainform")
 	Try
@@ -256,4 +249,14 @@ End Sub
 
 #End If
 
-
+Private Sub pnlPreview_Resize (Width As Float, Height As Float)
+	#if b4j	
+	Dim n As Node=vlc.player
+	If n.IsInitialized Then
+		n.SetSize(Width,Height)
+	End If	
+	#End If
+	#if b4i
+	llc.Resize
+	#End If	
+End Sub

@@ -4,6 +4,6 @@ ModuleBreakpoints0=
 ModuleBreakpoints1=
 ModuleClosedNodes0=
 ModuleClosedNodes1=1
-NavigationStack=Visual Designer,MainPage.bil,-100,4,Main,Process_Globals,18,0,Main,Application_Start,27,2,Main,Application_Background,29,0,B4XMainPage,Initialize,36,0,B4XMainPage,B4XPage_Created,40,6,B4XMainPage,ConfigureCamera,177,3,B4XMainPage,Class_Globals,12,0,B4XMainPage,llc_Preview,183,0,B4XMainPage,ShowResults,148,0
+NavigationStack=Main,Application_Start,27,2,Main,Application_Background,29,0,B4XMainPage,Initialize,36,0,B4XMainPage,B4XPage_Created,40,6,B4XMainPage,ShowResults,142,0,B4XMainPage,Class_Globals,30,0,Visual Designer,MainPage.bil,-100,6,B4XMainPage,ConfigureCamera,171,6,B4XMainPage,llc_Preview,244,0,B4XMainPage,pnlPreview_Resize,256,6
 SelectedBuild=0
 VisibleModules=1
