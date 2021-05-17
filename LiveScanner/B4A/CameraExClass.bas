@@ -37,7 +37,7 @@ Public Sub Initialize (Panel1 As Panel, FrontCamera As Boolean, TargetModule As 
 			Return
 		End If
 	End If
-	cam.Initialize2(Panel1, "camera", id)
+	cam.Initialize2(Panel1, "camera", id)	
 End Sub
 
 Private Sub FindCamera (frontCamera As Boolean) As CameraInfoAndId

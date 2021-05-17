@@ -2,8 +2,8 @@
 ModuleBookmarks1=
 ModuleBreakpoints0=
 ModuleBreakpoints1=
-ModuleClosedNodes0=4
+ModuleClosedNodes0=
 ModuleClosedNodes1=1
-NavigationStack=B4XMainPage,Class_Globals,25,0,B4XMainPage,llc_Preview,158,0,B4XMainPage,StartCameraShared,69,0,B4XMainPage,StopCamera,66,4,B4XMainPage,btnStartStop_Click,49,0,Main,Process_Globals,13,0,Main,Application_Foreground,36,0,B4XMainPage,StartCamera,139,6,B4XMainPage,ShowResults,115,0,B4XMainPage,ConfigureCamera,148,3
+NavigationStack=Visual Designer,MainPage.bil,-100,4,Main,Process_Globals,18,0,Main,Application_Start,27,2,Main,Application_Background,29,0,B4XMainPage,Initialize,36,0,B4XMainPage,B4XPage_Created,40,6,B4XMainPage,ConfigureCamera,177,3,B4XMainPage,Class_Globals,12,0,B4XMainPage,llc_Preview,183,0,B4XMainPage,ShowResults,148,0
 SelectedBuild=0
 VisibleModules=1

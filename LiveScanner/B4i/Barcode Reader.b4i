@@ -34,7 +34,7 @@ Sub Process_Globals
 End Sub
 
 Private Sub Application_Start (Nav As NavigationController)
-	NavControl = Nav
+	NavControl = Nav	
 	Dim PagesManager As B4XPagesManager
 	PagesManager.Initialize(NavControl)
 End Sub

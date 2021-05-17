@@ -16,21 +16,22 @@ Sub Class_Globals
 	Private xui As XUI
 	Private pnlPreview As B4XView
 	Private btnStartStop As B4XView
-	#if B4A
-	Private rp As RuntimePermissions
-	Private camEx As CameraExClass
-	Private LastPreview As Long
-	Private IntervalBetweenPreviewsMs As Int = 100
-	#End If
-	#if B4i
-	Private llc As LLCamera
-	#End If
 	#if B4J
 	Private vlc As B4JVlcj
 	Private MRITextField As B4XView
 	Private OptionsTextField As B4XView
 	Private Timer1 As Timer
 	Private decoding As Boolean=False
+	#else
+	Private LastPreview As Long
+	Private IntervalBetweenPreviewsMs As Int = 200
+	#if B4A
+	Private rp As RuntimePermissions
+	Private camEx As CameraExClass
+	#End If
+	#if B4i
+	Private llc As LLCamera
+	#End If
 	#End If
 	Private reader As DBR
 	Private toast As BCToast
@@ -47,7 +48,7 @@ Private Sub B4XPage_Created (Root1 As B4XView)
 	Root.LoadLayout("MainPage")
 	toast.Initialize(Root)
 	StopCamera
-	B4XPages.SetTitle(Me, "Barcode Example") 
+	B4XPages.SetTitle(Me, "Barcode Example") 	
 	reader.Initialize
 	
 	#if b4j
@@ -117,12 +118,11 @@ Private Sub ShowResults (results As List)
 			End If
 			index=index+1
 		Next
-		lblResult.Text = sb.ToString
+		lblResult.Text = sb.ToString		
 		toast.Show($"Found [Color=Blue][b][plain]${results.Size}[/plain][/b][/Color] barcode(s)"$)
 	End If
 	
 End Sub
-
 
 #if B4A
 Private Sub StartCamera
@@ -147,10 +147,10 @@ End Sub
 
 Private Sub Camera1_Preview (data() As Byte)
 	If DateTime.Now > LastPreview + IntervalBetweenPreviewsMs Then			
-		Dim bm As Bitmap=BytesToImage(camEx.PreviewImageToJpeg(data,100))
-		LastPreview = DateTime.Now		
+		Dim bm As Bitmap=BytesToImage(camEx.PreviewImageToJpeg(data,100))		
 		Dim results As List=reader.decodeImage(bm)	
 		ShowResults(results)
+		LastPreview = DateTime.Now
 	End If
 End Sub
 
@@ -167,7 +167,7 @@ End Sub
 Private Sub StartCamera
 	If llc.IsInitialized Then llc.StopPreview
 	llc.Initialize(pnlPreview, "llc", False)
-	llc.StartPreview
+	llc.StartPreview	
 	ConfigureCamera
 	StartCameraShared
 End Sub
@@ -184,8 +184,11 @@ Private Sub ConfigureCamera
 End Sub
 
 Private Sub llc_Preview (Image As Bitmap)
-	Dim results As List=reader.decodeImage(Image)
-	ShowResults(results)
+	If DateTime.Now > LastPreview + IntervalBetweenPreviewsMs Then				
+		Dim results As List=reader.decodeImage(Image)
+		ShowResults(results)	
+		LastPreview = DateTime.Now	
+	End If
 	llc.ReleaseFrame(Image)
 End Sub
 
@@ -234,6 +237,13 @@ Sub Timer1_Tick
 	End If
 End Sub
 
+Private Sub pnlPreview_Resize (Width As Double, Height As Double)
+	Dim n As Node=vlc.player
+	If n.IsInitialized Then
+		n.SetSize(Width,Height)
+	End If
+End Sub
+
 Sub B4XPage_CloseRequest As ResumableSub
 	Log("We are closing the mainform")
 	Try
@@ -245,3 +255,5 @@ Sub B4XPage_CloseRequest As ResumableSub
 End Sub
 
 #End If
+
+
