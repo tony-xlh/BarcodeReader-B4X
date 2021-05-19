@@ -5,7 +5,7 @@ Demo apps using B4X and Dynamsoft Barcode Reader to read barcodes in images and 
 * BarcodeReader: decode local images
 * LiveScanner: decode video stream
 
-The B4X library is released on the [B4X forum](https://www.b4x.com/android/forum/threads/b4x-b4xpages-dynamsoft-barcode-reader-cross-platform-barcode-qr-code-scanning-library.130728/).
+The B4X library is released on the [B4X forum](https://www.b4x.com/android/forum/threads/b4x-b4xpages-dynamsoft-barcode-reader-cross-platform-barcode-qr-code-scanning-library.130728/). The live scanner depends on the B4X library.
 
 ## Requirements
 
