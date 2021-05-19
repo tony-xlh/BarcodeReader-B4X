@@ -245,11 +245,12 @@ Sub B4XPage_CloseRequest As ResumableSub
 	Catch
 		Log(LastException)
 	End Try	
+	return ""
 End Sub
 
 #End If
 
-Private Sub pnlPreview_Resize (Width As Float, Height As Float)
+Private Sub pnlPreview_Resize (Width As Double, Height As Double)
 	#if b4j	
 	Dim n As Node=vlc.player
 	If n.IsInitialized Then
