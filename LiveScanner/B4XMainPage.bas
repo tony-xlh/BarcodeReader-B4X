@@ -49,7 +49,7 @@ Private Sub B4XPage_Created (Root1 As B4XView)
 	toast.Initialize(Root)
 	StopCamera
 	B4XPages.SetTitle(Me, "Barcode Example") 	
-	reader.Initialize
+	reader.Initialize("DLS2eyJoYW5kc2hha2VDb2RlIjoiMjAwMDAxLTE2NDk4Mjk3OTI2MzUiLCJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSIsInNlc3Npb25QYXNzd29yZCI6IndTcGR6Vm05WDJrcEQ5YUoifQ==")
 	
 	#if b4j
 	If vlc.IsVLCInstalled = False Then
@@ -61,9 +61,6 @@ Private Sub B4XPage_Created (Root1 As B4XView)
 	vlc.Initialize("vlc")
 	pnlPreview.AddView(vlc.Player,0,0,pnlPreview.Width,pnlPreview.Height)
 	Timer1.Initialize("Timer1",1000)
-	reader.initLicenseFromKey("t0075xQAAAEUicOSVdOGZ4EZ/VxishmCoVr+hWw1MHA/HVLn/Tcn4rrPWS5q4/XutioRWZuPhRqYc7M819vfK8OJWilkG+Ic1yw9e6ypy")
-	#else
-	reader.initLicenseFromLTS("200001")
 	#End If
 	
 	btnStartStop.Enabled = True
