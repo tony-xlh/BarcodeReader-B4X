@@ -23,13 +23,8 @@ Sub Class_Globals
 End Sub
 
 Public Sub Initialize
-	reader.Initialize("DLS2eyJoYW5kc2hha2VDb2RlIjoiMjAwMDAxLTE2NDk4Mjk3OTI2MzUiLCJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSIsInNlc3Npb25QYXNzd29yZCI6IndTcGR6Vm05WDJrcEQ5YUoifQ==")
-	'request your license here: https://www.dynamsoft.com/customer/license/trialLicense?ver=latest
-	#if b4j
-	
-	#else
-	reader.initLicenseFromLTS("200001")	
-	#End If	
+	Dim license As String = "DLS2eyJoYW5kc2hha2VDb2RlIjoiMjAwMDAxLTE2NDk4Mjk3OTI2MzUiLCJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSIsInNlc3Npb25QYXNzd29yZCI6IndTcGR6Vm05WDJrcEQ5YUoifQ==" 'request your license here: https://www.dynamsoft.com/customer/license/trialLicense?ver=latest
+	reader.Initialize(license)
 End Sub
 
 'This event will be called once, before the page becomes visible.

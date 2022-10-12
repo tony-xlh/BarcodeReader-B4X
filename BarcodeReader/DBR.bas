@@ -21,31 +21,14 @@ Public Sub Initialize(license As String)
 	readerStatic.RunMethod("initLicense",Array(license))
 	#End If
 	
+	#if b4a
+	asJO(Me).RunMethod("initLicense",Array(license))
+	#End If
+	
 	#if b4i
-
+reader=asNO(Me).RunMethod("initializeDBRFromLTS:",Array(organizationID))
 	#else
 	reader.InitializeNewInstance("com.dynamsoft.dbr.BarcodeReader",Null)		
-	#End If
-End Sub
-
-'not available for desktop
-public Sub initLicense(license As String)
-	#if b4a
-	asJO(Me).RunMethod("initLicenseFromLTS",Array(reader,organizationID))	
-	#End If	
-	#if b4i
-	reader=asNO(Me).RunMethod("initializeDBRFromLTS:",Array(organizationID))
-	#End If
-
-End Sub
-
-public Sub initLicenseFromKey(license As String)
-	#if b4i
-	'reader.RunMethod("alloc",Null).RunMethod("initWithLicense:",Array(license))
-	reader=asNO(Me).RunMethod("initializeDBR:",Array(license))
-	#else
-	reader.RunMethod("initLicense",Array(license))
-	Log(reader.RunMethod("getVersion",Null))
 	#End If
 End Sub
 
@@ -117,17 +100,13 @@ End Sub
 
 #if java
 import com.dynamsoft.dbr.BarcodeReader;
-import com.dynamsoft.dbr.BarcodeReaderException;
-import com.dynamsoft.dbr.DMLTSConnectionParameters;
-import com.dynamsoft.dbr.DBRLTSLicenseVerificationListener;
-public static void initLicenseFromLTS(BarcodeReader dbr,String organizationID){
-	DMLTSConnectionParameters parameters = new DMLTSConnectionParameters();
-    parameters.organizationID = organizationID;
-    dbr.initLicenseFromLTS(parameters, new DBRLTSLicenseVerificationListener() {
+import com.dynamsoft.dbr.DBRLicenseVerificationListener;
+public static void initLicense(String license){
+    BarcodeReader.initLicense(license, new DBRLicenseVerificationListener() {
         @Override
-        public void LTSLicenseVerificationCallback(boolean isSuccess, Exception error) {
-            if (!isSuccess) {
-                error.printStackTrace();
+        public void DBRLicenseVerificationCallback(boolean isSuccess, Exception error) {
+            if(!isSuccess){
+               error.printStackTrace();
             }
         }
     });
