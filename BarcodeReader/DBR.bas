@@ -122,11 +122,15 @@ public static void initLicense(String license){
 #import <DynamsoftBarcodeReader/DynamsoftBarcodeReader.h>
 
 - (NSArray<iTextResult*>*) decodeImage: (UIImage*) image {
-    NSError __autoreleasing * _Nullable error;
-    DynamsoftBarcodeReader* dbr=self->__reader.object;
-    NSArray<iTextResult*>* result = [dbr decodeImage:image error:&error];    
-	NSLog(@"%lu",(unsigned long)result.count);
-    return result;
+	NSError __autoreleasing * _Nullable error;
+	DynamsoftBarcodeReader* dbr=self->__reader.object;
+	NSArray<iTextResult*>* result = [dbr decodeImage:image error:&error];    
+	//NSLog(@"%lu",(unsigned long)result.count);
+	if (result.count>0) {
+	    return result;
+	}else{
+	    return @[];
+	}
 }
 
 
