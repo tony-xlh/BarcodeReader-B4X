@@ -9,26 +9,34 @@ Sub Class_Globals
 	Private reader As NativeObject 'ignore
 	#else
 	Private reader As JavaObject
-	#End If	
+	#End If
+	
 End Sub
 
 'Initializes the object. You can add parameters to this method if needed.
-Public Sub Initialize
+Public Sub Initialize(license As String)
+	#if b4j
+	Dim readerStatic As JavaObject
+	readerStatic.InitializeStatic("com.dynamsoft.dbr.BarcodeReader")
+	readerStatic.RunMethod("initLicense",Array(license))
+	#End If
+	
 	#if b4i
 
 	#else
 	reader.InitializeNewInstance("com.dynamsoft.dbr.BarcodeReader",Null)		
-	#End If		
+	#End If
 End Sub
 
 'not available for desktop
-public Sub initLicenseFromLTS(organizationID As String)
+public Sub initLicense(license As String)
 	#if b4a
 	asJO(Me).RunMethod("initLicenseFromLTS",Array(reader,organizationID))	
 	#End If	
 	#if b4i
 	reader=asNO(Me).RunMethod("initializeDBRFromLTS:",Array(organizationID))
 	#End If
+
 End Sub
 
 public Sub initLicenseFromKey(license As String)

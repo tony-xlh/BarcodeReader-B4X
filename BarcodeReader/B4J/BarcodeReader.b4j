@@ -20,7 +20,7 @@ Version=8.8
 	#MainFormHeight: 500 
 #End Region
 
-#AdditionalJar: dynamsoft-barcodereader-8.2
+#AdditionalJar: dynamsoft-barcodereader-9.4.0
 
 Sub Process_Globals
 	Private fx As JFX

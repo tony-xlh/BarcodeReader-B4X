@@ -23,10 +23,10 @@ Sub Class_Globals
 End Sub
 
 Public Sub Initialize
-    reader.Initialize
+	reader.Initialize("DLS2eyJoYW5kc2hha2VDb2RlIjoiMjAwMDAxLTE2NDk4Mjk3OTI2MzUiLCJvcmdhbml6YXRpb25JRCI6IjIwMDAwMSIsInNlc3Npb25QYXNzd29yZCI6IndTcGR6Vm05WDJrcEQ5YUoifQ==")
 	'request your license here: https://www.dynamsoft.com/customer/license/trialLicense?ver=latest
 	#if b4j
-	reader.initLicenseFromKey("t0075xQAAAEUicOSVdOGZ4EZ/VxishmCoVr+hWw1MHA/HVLn/Tcn4rrPWS5q4/XutioRWZuPhRqYc7M819vfK8OJWilkG+Ic1yw9e6ypy")
+	
 	#else
 	reader.initLicenseFromLTS("200001")	
 	#End If	
@@ -37,7 +37,7 @@ Private Sub B4XPage_Created (Root1 As B4XView)
 	Root = Root1
 	Root.LoadLayout("MainPage")	
 	cvs.Initialize(Panel1)
-	B4XPages.SetTitle(Me,"Barcode Reader")
+	B4XPages.SetTitle(Me,"Barcode Reader")	
 End Sub
 
 'You can see the list of page related events in the B4XPagesManager object. The event name is B4XPage.
