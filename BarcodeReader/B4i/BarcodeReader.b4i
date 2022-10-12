@@ -37,7 +37,6 @@ Version=7.2
 Sub Process_Globals
 	Public App As Application
 	Public NavControl As NavigationController
-
 End Sub
 
 Private Sub Application_Start (Nav As NavigationController)

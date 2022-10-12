@@ -26,7 +26,9 @@ Public Sub Initialize(license As String)
 	#End If
 	
 	#if b4i
-reader=asNO(Me).RunMethod("initializeDBRFromLTS:",Array(organizationID))
+	Dim initializer As NativeObject
+	initializer = initializer.Initialize("BarcodeReaderInitializer").RunMethod("new", Null)
+	reader=initializer.RunMethod("initialize:",Array(license))
 	#else
 	reader.InitializeNewInstance("com.dynamsoft.dbr.BarcodeReader",Null)		
 	#End If
@@ -118,31 +120,31 @@ public static void initLicense(String license){
 #if b4i
 #If ObjC
 #import <DynamsoftBarcodeReader/DynamsoftBarcodeReader.h>
-- (DynamsoftBarcodeReader*) initializeDBR: (NSString*) license {
 
-    DynamsoftBarcodeReader *dbr;
-
-    dbr = [[DynamsoftBarcodeReader alloc] initWithLicense:license];
-    NSLog(dbr.getVersion);
-    return dbr;
-
-}
-
-- (DynamsoftBarcodeReader*) initializeDBRFromLTS: (NSString*) organizationID {
-
-    DynamsoftBarcodeReader *dbr;
-	iDMLTSConnectionParameters* lts = [[iDMLTSConnectionParameters alloc] init];
-	lts.organizationID = organizationID;	
-	dbr = [[DynamsoftBarcodeReader alloc] initLicenseFromLTS:lts verificationDelegate:self];
-	return dbr;
- }
- 
 - (NSArray<iTextResult*>*) decodeImage: (UIImage*) image {
     NSError __autoreleasing * _Nullable error;
     DynamsoftBarcodeReader* dbr=self->__reader.object;
-    NSArray<iTextResult*>* result = [dbr decodeImage:image withTemplate:@"" error:&error];    
+    NSArray<iTextResult*>* result = [dbr decodeImage:image error:&error];    
 	NSLog(@"%lu",(unsigned long)result.count);
     return result;
+}
+
+
+@end
+
+@interface BarcodeReaderInitializer:NSObject <DBRLicenseVerificationListener>
+@end
+@implementation BarcodeReaderInitializer
+
+- (DynamsoftBarcodeReader*) initialize: (NSString*) license {
+    [DynamsoftBarcodeReader initLicense:license verificationDelegate:self];
+    DynamsoftBarcodeReader *dbr;
+	dbr = [[DynamsoftBarcodeReader alloc] init];
+    return dbr;
+}
+
+- (void)DBRLicenseVerificationCallback:(bool)isSuccess error:(NSError * _Nullable)error {
+
 }
 
 #end if
